@@ -131,8 +131,11 @@ def annuleEnd():
 def plusPlayer1():
     global points
     global p1_win
+    global p2_win
     global actions
     global current_set
+    if p1_win==2 or p2_win==2:
+        return
     actions.append("1")
     points[current_set][0].set(points[current_set][0].get()+1)
     if current_set==0:
@@ -176,12 +179,13 @@ def plusPlayer1():
 def plusPlayer2():
     global points
     global p2_win
+    global p1_win
     global actions
     global current_set
-    actions.append("2")
-    if current_set>2:
+    if p1_win==2 or p2_win==2:
         # Match terminé
         return
+    actions.append("2")
     points[current_set][1].set(points[current_set][1].get()+1)
     if current_set==0:
         if verif_set1()==True:
