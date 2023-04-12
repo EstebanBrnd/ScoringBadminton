@@ -5,7 +5,7 @@ from tkinter.messagebox import *
 from tkinter import ttk
 
 fenetre3 = Tk()
-fenetre3.geometry("300x330")
+fenetre3.geometry("300x105")
 fenetre3.title("Live Scoring by Esteban")
 fenetre3.configure(bg="grey14")
 style =ThemedStyle(fenetre3)
@@ -25,7 +25,7 @@ p2_win=0
 
 fenetre2 = None
 fenetre = Tk()
-fenetre.geometry("1120x330")
+fenetre.geometry("1120x280")
 fenetre.configure(bg="grey14")
 style =ThemedStyle(fenetre)
 style.set_theme('equilux') 
@@ -103,7 +103,7 @@ def closeAll():
 def match_end(vainqueur):
     global fenetre2
     fenetre2 = Tk()
-    fenetre2.geometry("600x300")
+    fenetre2.geometry("600x200")
     fenetre2.title("Live Scoring by Esteban")
     fenetre2.configure(bg="grey14")
     style =ThemedStyle(fenetre2)
@@ -258,13 +258,13 @@ def annule():
 
 
 
-bouton = Button(fenetre, text="Player 1", command=plusPlayer1,bg="green")
+bouton = Button(fenetre, text="🏸", command=plusPlayer1,bg="green")
 bouton.grid(row=0,column=5)
 
 bouton3 = Button(fenetre, text="Annule", command=annule,bg="red")
 bouton3.grid(row=1,column=5)
 
-bouton2 = Button(fenetre, text="Player 2", command=plusPlayer2,bg="green")
+bouton2 = Button(fenetre, text="🏸", command=plusPlayer2,bg="green")
 bouton2.grid(row=2,column=5)
 
 ttk.Separator(
