@@ -174,14 +174,35 @@ def plusPlayer2():
 
         
 def annule():
+    global current_set
+    global p1_win
+    global p2_win
     try:
         player = actions.pop()
     except:
         print("Pas d'actions à annuler")
     if player=="1":
-        print("Joueur 1")   
+        if points[current_set][0].get()==0:
+            current_set-=1
+            p1_win-=1
+            points[current_set][0].set(points[current_set][0].get()-1)
+            label = Label( fenetre, textvariable=points[current_set][0],font=(default,100),bg="grey")
+            label.grid(row=0,column=current_set+2)
+            label2 = Label( fenetre, textvariable=points[current_set][1],font=(default,100),bg="grey")
+            label2.grid(row=2,column=current_set+2)
+            return
+        points[current_set][0].set(points[current_set][0].get()-1)  
     else:
-        print("Joueur 2")
+        if points[current_set][1].get()==0:
+            current_set-=1
+            p2_win-=1
+            points[current_set][1].set(points[current_set][1].get()-1)
+            label = Label( fenetre, textvariable=points[current_set][0],font=(default,100),bg="grey")
+            label.grid(row=0,column=current_set+2)
+            label2 = Label( fenetre, textvariable=points[current_set][1],font=(default,100),bg="grey")
+            label2.grid(row=2,column=current_set+2)
+            return
+        points[current_set][1].set(points[current_set][1].get()-1)
 
 
 
