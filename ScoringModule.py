@@ -17,6 +17,7 @@ style.set_theme('equilux')
 points = [[IntVar(),IntVar(),-1],[IntVar(),IntVar(),-1],[IntVar(),IntVar(),-1]] # 3 sets : pts J1 / pts J2 / gagnant (0 ou 1 ou -1 si pas encore de gagnant)
 
 actions = []
+current_set = 0
 
 def verif_match():
     global p1_win
@@ -81,85 +82,96 @@ def plusPlayer1():
     global points
     global p1_win
     global actions
+    global current_set
     actions.append("1")
-    if verif_set1()==True:
-        if verif_set2()==True:
-            if verif_set3()==False:
-                points[2][0].set(points[2][0].get()+1)
-            if verif_set3()==True:
-                label4 = Label( fenetre, textvariable=points[2][0],font=(default,100),bg="green")
-                label4.grid(row=0,column=4)
-                label24 = Label( fenetre, textvariable=points[2][1],font=(default,100),bg="red")
-                label24.grid(row=2,column=4)
-                points[2][2]=0
-                showinfo("Terminé", "Le match est terminé.\nFermer cet onglet pour terminer le programme")
-                fenetre.destroy()
-                return
-        else:
-            points[1][0].set(points[1][0].get()+1)
-            if verif_set2()==True:
-                p1_win+=1
-                label3 = Label( fenetre, textvariable=points[1][0],font=(default,100),bg="green")
-                label3.grid(row=0,column=3)
-                label23 = Label( fenetre, textvariable=points[1][1],font=(default,100),bg="red")
-                label23.grid(row=2,column=3)
-                points[1][2]=0
-                if verif_match()==True:
-                    showinfo("Terminé", "Le match est terminé.\nFermer cet onglet pour terminer le programme")
-                    fenetre.destroy()
-                return
-    else:
-        points[0][0].set(points[0][0].get()+1)
+    points[current_set][0].set(points[current_set][0].get()+1)
+    if current_set==0:
         if verif_set1()==True:
-                p1_win=1
-                label2 = Label( fenetre, textvariable=points[0][0],font=(default,100),bg="green")
-                label2.grid(row=0,column=2)
-                label22 = Label( fenetre, textvariable=points[0][1],font=(default,100),bg="red")
-                label22.grid(row=2,column=2)
-                points[0][2]=0
-                return
+            current_set+=1
+            p1_win+=1
+            label2 = Label( fenetre, textvariable=points[0][0],font=(default,100),bg="green")
+            label2.grid(row=0,column=2)
+            label22 = Label( fenetre, textvariable=points[0][1],font=(default,100),bg="red")
+            label22.grid(row=2,column=2)
+            points[0][2]=0
+            return
+    if current_set==1:
+        if verif_set2()==True:
+            current_set+=1
+            p1_win+=1
+            label3 = Label( fenetre, textvariable=points[1][0],font=(default,100),bg="green")
+            label3.grid(row=0,column=3)
+            label23 = Label( fenetre, textvariable=points[1][1],font=(default,100),bg="red")
+            label23.grid(row=2,column=3)
+            points[1][2]=0
+        if verif_match()==True:
+            fenetre.update()
+            showinfo("Terminé", "Le match est terminé.\nFermer cet onglet pour terminer le programme") 
+            fenetre.destroy() 
+        return
+    if current_set==2:
+        if verif_set3()==True:
+            current_set+=1
+            p1_win+=1
+            label4 = Label( fenetre, textvariable=points[2][0],font=(default,100),bg="green")
+            label4.grid(row=0,column=4)
+            label24 = Label( fenetre, textvariable=points[2][1],font=(default,100),bg="red")
+            label24.grid(row=2,column=4)
+            points[2][2]=0
+            fenetre.update()
+            showinfo("Terminé", "Le match est terminé.\nFermer cet onglet pour terminer le programme")
+            fenetre.destroy()
+            return
+
 
 def plusPlayer2():
     global points
     global p2_win
     global actions
+    global current_set
     actions.append("2")
-    if verif_set1()==True:
-        if verif_set2()==True:
-            if verif_set3()==False:
-                points[2][1].set(points[2][1].get()+1)
-            if verif_set3()==True:
-                label24 = Label( fenetre, textvariable=points[2][1],font=(default,100),bg="green")
-                label24.grid(row=2,column=4)
-                label4 = Label( fenetre, textvariable=points[2][0],font=(default,100),bg="red")
-                label4.grid(row=0,column=4)
-                points[2][2]=1
-                showinfo("Terminé", "Le match est terminé.\nFermer cet onglet pour terminer le programme")
-                fenetre.destroy()
-                return
-        else:
-            points[1][1].set(points[1][1].get()+1)
-            if verif_set2()==True:
-                p2_win+=1
-                label23 = Label( fenetre, textvariable=points[1][1],font=(default,100),bg="green")
-                label23.grid(row=2,column=3)
-                label3 = Label( fenetre, textvariable=points[1][0],font=(default,100),bg="red")
-                label3.grid(row=0,column=3)
-                points[1][2]=1
-                if verif_match()==True:
-                    showinfo("Terminé", "Le match est terminé")
-                    fenetre.destroy()
-                return
-    else:
-        points[0][1].set(points[0][1].get()+1)
+    if current_set>2:
+        # Match terminé
+        return
+    points[current_set][1].set(points[current_set][1].get()+1)
+    if current_set==0:
         if verif_set1()==True:
-                p2_win=1
-                label22 = Label( fenetre, textvariable=points[0][1],font=(default,100),bg="green")
-                label22.grid(row=2,column=2)
-                label2 = Label( fenetre, textvariable=points[0][0],font=(default,100),bg="red")
-                label2.grid(row=0,column=2)
-                points[0][2]=1
-                return
+            current_set+=1
+            p2_win+=1
+            label2 = Label( fenetre, textvariable=points[0][0],font=(default,100),bg="red")
+            label2.grid(row=0,column=2)
+            label22 = Label( fenetre, textvariable=points[0][1],font=(default,100),bg="green")
+            label22.grid(row=2,column=2)
+            points[0][2]=1
+            return
+    if current_set==1:
+        if verif_set2()==True:
+            current_set+=1
+            p2_win+=1
+            label3 = Label( fenetre, textvariable=points[1][0],font=(default,100),bg="red")
+            label3.grid(row=0,column=3)
+            label23 = Label( fenetre, textvariable=points[1][1],font=(default,100),bg="green")
+            label23.grid(row=2,column=3)
+            points[1][2]=1
+        if verif_match()==True:
+            fenetre.update()
+            showinfo("Terminé", "Le match est terminé.\nFermer cet onglet pour terminer le programme")
+            fenetre.destroy()
+        return
+    if current_set==2:
+        if verif_set3()==True:
+            current_set+=1
+            p2_win+=1
+            label4 = Label( fenetre, textvariable=points[2][0],font=(default,100),bg="red")
+            label4.grid(row=0,column=4)
+            label24 = Label( fenetre, textvariable=points[2][1],font=(default,100),bg="green")
+            label24.grid(row=2,column=4)
+            points[2][2]=1
+            fenetre.update()
+            showinfo("Terminé", "Le match est terminé.\nFermer cet onglet pour terminer le programme")
+            fenetre.destroy()
+            return
+
         
 def annule():
     try:
@@ -167,7 +179,7 @@ def annule():
     except:
         print("Pas d'actions à annuler")
     if player=="1":
-        print("Joueur 1")
+        print("Joueur 1")   
     else:
         print("Joueur 2")
 
